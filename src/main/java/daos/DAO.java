@@ -27,7 +27,7 @@ public class DAO implements DAOinterface {
         Connection connection = ConnectionFactory.getConnection();
         try {
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM user");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM people");
             List users = new ArrayList<DTO>();
             while(rs.next()){
                 DTO user = extractDTOfromResultSet(rs);
@@ -49,6 +49,7 @@ public class DAO implements DAOinterface {
             ps.setString(3, dto.getEmail());
             ps.setString(4, dto.getGender());
             ps.setString(5, dto.getState());
+            ps.setInt(6, dto.getId());
             int i = ps.executeUpdate();
             if(i == 1) {
                 return true;
@@ -62,12 +63,14 @@ public class DAO implements DAOinterface {
     public Boolean create(DTO dto) {
         Connection connection = ConnectionFactory.getConnection();
         try {
-            PreparedStatement ps = connection.prepareStatement("\"INSERT INTO people VALUES (NOT NULL, ?, ?, ?, ?, ?)\"");
-            ps.setString(1, dto.getFirst_name());
-            ps.setString(2, dto.getLast_name());
-            ps.setString(3, dto.getEmail());
-            ps.setString(4, dto.getGender());
-            ps.setString(5, dto.getState());
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO people VALUES (?, ?, ?, ?, ?, ?)");
+            ps.setInt(1, dto.getId());
+            ps.setString(2, dto.getFirst_name());
+            ps.setString(3, dto.getLast_name());
+            ps.setString(4, dto.getEmail());
+            ps.setString(5, dto.getGender());
+            ps.setString(6, dto.getState());
+
             int i = ps.executeUpdate();
             if(i == 1) {
                 return true;
