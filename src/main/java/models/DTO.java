@@ -1,4 +1,6 @@
-package daos;
+package models;
+
+import daos.DTOinterface;
 
 public class DTO implements DTOinterface {
     private Integer id;
@@ -15,6 +17,9 @@ public class DTO implements DTOinterface {
         this.email = email;
         this.gender = gender;
         this.state = state;
+    }
+
+    public DTO() {
     }
 
     public void setId(Integer id) {
